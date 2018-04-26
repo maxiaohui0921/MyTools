@@ -1,4 +1,7 @@
 # -*- coding: utf-8 -*-
+'''
+抓取xmind文件中的内容，生成树状结构数组
+'''
 from mekk.xmind import XMindDocument
 import time
 
@@ -29,6 +32,3 @@ if __name__ == '__main__':
     print getRoot(sheet).get_title()
     for i in getSubs(getRoot(sheet)):
         print i.get_title()
-        if len(getSubs(i))>0:
-            for j in getSubs(i):
-                print j.get_title()
