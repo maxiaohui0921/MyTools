@@ -1,14 +1,6 @@
 # -*- coding: utf-8 -*-
 import uniout
-'''
-对树状结构数组进行处理，直接生成rotine，用例路径图
-'''
-
-def note(parent,value,children):
-    return [parent,value,children]
-
-treeE=[note(False,"webchat",["我","通信录","微信","发现"]),note("webchat","我",False),note("webchat","发现",["朋友圈"]),note("发现","朋友圈",False),note("webchat","通信录",False)]
-treeE.append(note("webchat","微信",False))
+import xmind
 
 def ends(tree):
     endNote=[]
@@ -39,6 +31,11 @@ def valueList(tree):
     return value
 
 if __name__ == '__main__':
+
+    xfile = r'C:\Users\maxh\Documents\GitHub\yutu\webchat.xmind'
+    sheet = xmind.getSheet(xfile)
+    treeE=xmind.getTreeData(sheet)
+
     endNotes=ends(treeE)
     for i in endNotes:
         routine=findRoutine(treeE,i)

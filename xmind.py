@@ -3,10 +3,11 @@
 抓取xmind文件中的内容，生成树状结构数组
 '''
 from mekk.xmind import XMindDocument
-import time
-import treeData
 
 xfile=r'C:\Users\maxh\Documents\GitHub\yutu\webchat.xmind'
+
+def note(parent,value,children):
+    return [parent,value,children]
 
 def getSheet(file):
     xmindf=XMindDocument.open(file)
@@ -44,7 +45,7 @@ def getTreeData(sheet):
     xTree=[]  #最后获取的列表
 
     root = getRoot(sheet)     #初始化数据
-    xTree.append(treeData.note(False,getValue(root),getSubs(root)[1])) #添加初始节点
+    xTree.append(note(False,getValue(root),getSubs(root)[1])) #添加初始节点
     tbdArray=arrayTBD(root,getSubs(root)[0])
     for i in tbdArray:
         tbdNotes.append(i)
@@ -54,7 +55,7 @@ def getTreeData(sheet):
         cnoteXmind=tbdNotes[0][1]  #子节点，xmind类型
         sNoteXmindList=getSubs(tbdNotes[0][1])[0]   #子节点的子节点，xmind类型，list
         sNoteValueList=getSubs(tbdNotes[0][1])[1]#子节点的子节点，value类型，list
-        xTree.append(treeData.note(getValue(fnoteXmind),getValue(cnoteXmind),sNoteValueList)) #把值加入到目标列表中
+        xTree.append(note(getValue(fnoteXmind),getValue(cnoteXmind),sNoteValueList)) #把值加入到目标列表中
         if sNoteXmindList!=False:#把子和孙加入到待处理列表中
             sList=arrayTBD(cnoteXmind,sNoteXmindList)
             for j in sList:
