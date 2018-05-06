@@ -17,7 +17,7 @@ def getXML():
 
 #生成树，把xml中所有的节点取出来放在列表中
 def xmlToTree(xml):  #root[0]
-    f = open(xml, 'rt')
+    f = open(xml, 'rb')
     tree = ET.parse(f)
     root = tree.getroot()
     visitList=[]
@@ -67,21 +67,18 @@ def getToRoot(root):
     d(text=root).click()
 
 def clickUI(node):
-    if node[0]=="" or node[1]=="":
+    if node[0]=="" and node[1]=="":
         bound=re.findall("\d+",node[2])
         x=int(bound[0])+int((int(bound[2]) - int(bound[0])) / 2)
         y=int(bound[1])+int((int(bound[3]) - int(bound[1])) / 2)
         d.click(x,y)
         time.sleep(2)
         print("坐标点击到我了")
-        '''
-    elif node[0]=="":
-        d(resourceId=node[1]).click()
-        print("id点击到我了")
-    '''
-    elif node[1]=="":
+    elif node[0]!="" and node[0]!=False:
         d(text=node[0]).click()
         print("文本点击到我了")
+    else:
+        d(resourceId=node[1]).click()
     time.sleep(2)  #等待界面跳转加载的时间
 
 def father(tree,node):
@@ -99,7 +96,7 @@ def findRoutine(tree,note):
         father1 = father(tree, note)
         routine.insert(0, father1)
         note = father1
-    routine.insert(0, tree[0])
+    #routine.insert(0, tree[0])
     return routine
 
 def gotoAIMui(tree,note,root):
@@ -149,4 +146,4 @@ def doUITraval(root):
 
 if __name__ == '__main__':
 
-    doUITraval("Contacts")
+    doUITraval("Settings")
